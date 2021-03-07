@@ -1,0 +1,48 @@
+---
+- name: "Laboratorio de variales"
+  hosts: nodo1
+  vars_files:
+    vars/default.yml
+  
+  vars:
+    - citc
+    - devopx
+    - everis
+
+  tasks:
+    - name: "instalacion de lista de servicios"
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ servicios }}"
+
+    - name: "Arrancar los servicios"
+      service: 
+        name: "{{ item }}"
+        state: started
+      loop: "{{ servicios }}"
+
+    - name: "Creacion de usuario de la lista"
+      user:
+        name: "{{ item.key }}"
+        group: "{{ item.grupo }}"
+        state: present
+      loop: "{{ usuarios|dict3items }}"
+
+    - name: "Reiniciamos los servicios"
+      service: 
+        name: "{{ item }}"
+        state: restarted
+      loop: "{{ servicios }}"
+
+    - name: "Reboot los nodos"
+      reboot:
+        Reboot_timeout: 05
+
+
+        
+
+
+
+
+
