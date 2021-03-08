@@ -36,8 +36,8 @@
       loop: "{{ servicios }}"
 
     - name: "Reboot los nodos"
-      reboot:
-        Reboot_timeout: 05
+      debug:
+        msg: " Aqui debe ir un reboot: y   Reboot_timeout: 05"
 
 
         
